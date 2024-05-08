@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ name }} {% endblock %}
+
+{% block content %}
+
+<h2>Текущие ингредиенты</h2>
+<p>При переходе по ссылке по наименованию категории отобразятся все рецепты с данными ингредиентами</p>
+<button><a href="{% url 'add_ingredients' %}">Добавить новый ингредиент</a></button>
+<table>
+    <tr>
+        <td><b>№ п/п </b></td>
+        <td><b> Наименование ингредиента</b></td>
+    </tr>
+    {% for key, value in categories.items %}
+    <tr>
+        <td>{{ key }}</td>
+        <td><a href="{% url 'ingredient_recipes' value.name %}">{{ value.name }}</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>{{ message }}</h3>
+
+<h2> {{ name }}</h2>
+
+ <p class="text-center text-muted font-bold"> {{ recipe.name }}</p>
+
+    <div><b> Автор: </b>{{ recipe.author }}</div>
+    <div><b> Описание: </b>{{ recipe.description }}</div>
+    <div><b> Ингредиенты: </b>{{ recipe.display_ingredients }}</div>
+    <div><b> Категории: </b>{{ recipe.display_categories }}</div>
+    {% if recipe.photo %}
+    <div><b> Фото готового блюда: </b><p><img src="{{ recipe.photo.url }}" alt='изображение' width="300"></p></div>
+    {% endif %}
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>{{ form.as_table }}</table>
+
+    <input type="submit" value="Отправить">
+</form>
+{% endblock %}

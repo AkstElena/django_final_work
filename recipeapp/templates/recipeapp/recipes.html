@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ name }} {% endblock %}
+
+{% block content %}
+<h2>Рецепты</h2>
+
+
+
+<button ><a href="{% url 'add_recipe' %}">Добавить новый рецепт</a></button>
+  <ol>
+    {% for recipe in recipes %}
+    <li><div><a href="{% url 'recipe' recipe.name %}"> {{ recipe }}</a></div>
+        <div><b> Автор: </b>{{ recipe.author.username }}</div>
+    </li>
+    {% endfor %}
+  </ol>
+{% endblock %}

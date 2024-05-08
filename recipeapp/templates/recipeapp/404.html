@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ name }} {% endblock %}
+
+{% block content %}
+  <table>
+    <tr>
+        <td> <b><a href="{% url 'index' %}">Главная</a> </b></td>
+
+  </table>
+    <h3>{{ text }}</h3>
+{% endblock %}
