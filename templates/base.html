@@ -25,11 +25,16 @@
                     <a href="{% url 'add_recipe' %}" class="py-5 px-3 text-gray-700 hover:text-gray-900">Добавить рецепт</a>
                     <a href="{% url 'categories' %}" class="py-5 px-3 text-gray-700 hover:text-gray-900">Категории рецептов</a>
                     <a href="{% url 'ingredients' %}" class="py-5 px-3 text-gray-700 hover:text-gray-900">Ингредиенты</a>
-                    <a href="#" class="py-5 px-3 text-gray-700 hover:text-gray-900">Авторизация</a> </div>
-            </div> <!-- secondary nav -->
+                </div> <!-- secondary nav -->
             <div class="hidden md:flex items-center space-x-1">
-                <a href="" class="py-5 px-3">Login</a>
-                <a href="" class="py-2 px-3 bg-yellow-400 text-white hover:bg-yellow-300 text-sm hover:text-yellow-800 rounded transition duration-300">Signup</a> </div>
+                {% if user.is_authenticated %}
+                    <a href="" class="py-5 px-3">{{user.username}}</a>
+                    <a href="{% url 'userapp:logout' %}" class="last py-2 px-3 bg-yellow-400 text-white hover:bg-yellow-300 text-sm hover:text-yellow-800 rounded transition duration-300">Выйти</a> </div>
+                {% else %}
+                <a href="{% url 'userapp:login' %}" class="py-5 px-3">Войти</a>
+                <a href="" class="last py-2 px-3 bg-yellow-400 text-white hover:bg-yellow-300 text-sm hover:text-yellow-800 rounded transition duration-300">Зарегистироваться</a>
+                {% endif %}
+            </div>
             <!-- mobile button goes here -->
             <div class="md:hidden flex items-center"> <button class="mobile-menu-button focus:outline-none">
                      <i class='bx bx-menu text-3xl mt-1'></i> </button> </div>
@@ -41,7 +46,6 @@
         <a href="{% url 'add_recipe' %}" class="block py-2 px-4 text-sm hover:bg-gray-200">Добавить рецепт</a>
         <a href="{% url 'categories' %}" class="block py-2 px-4 text-sm hover:bg-gray-200">Категории рецептов</a>
         <a href="{% url 'ingredients' %}" class="block py-2 px-4 text-sm hover:bg-gray-200">Ингредиенты</a>
-        <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-200">Авторизация</a> </div>
 </nav>
 <!-- content goes here -->
 

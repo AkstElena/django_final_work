@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from .models import Category, Ingredient, Recipe
@@ -15,6 +16,7 @@ def recipes(request):
     return render(request, 'recipeapp/recipes.html', context)
 
 
+@login_required
 def add_recipe(request):
     if request.method == 'POST':
         form = RecipeForm(request.POST, request.FILES)
@@ -74,6 +76,8 @@ def update_recipe(request, recipe_name):
 #     return render(request, 'recipeapp/404.html',
 #                   {'text': f'Рецептов в категории {category} не обнаружено',
 #                    'name': 'Данные не обнаружены'})
+
+@login_required
 def get_recipes_on_categories(request, category):
     recipes = Recipe.objects.all()
     all_recipes = []
@@ -88,6 +92,7 @@ def get_recipes_on_categories(request, category):
                    'name': 'Данные не обнаружены'})
 
 
+@login_required
 def get_recipes_on_ingredients(request, ingredient):
     recipes = Recipe.objects.all()
     all_recipes = []
@@ -109,6 +114,7 @@ def get_categories(request):
     return render(request, 'recipeapp/categories.html', context)
 
 
+@login_required
 def add_categories(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -129,6 +135,7 @@ def get_ingredients(request):
     return render(request, 'recipeapp/ingredients.html', context)
 
 
+@login_required
 def add_ingredients(request):
     if request.method == 'POST':
         form = IngredientForm(request.POST)

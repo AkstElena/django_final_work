@@ -23,6 +23,7 @@ from recipeapp.views import index
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('recipe/', include('recipeapp.urls')),
+    path('users/', include('userapp.urls', namespace='userapp')),
     path('', index),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
