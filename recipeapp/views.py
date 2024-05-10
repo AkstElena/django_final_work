@@ -23,7 +23,9 @@ def add_recipe(request):
         message = 'Ошибка в данных'
         if form.is_valid():
             name = form.cleaned_data['name']
-            form.save()
+            recipe = form.save(commit=False)
+            recipe.author = request.user
+            recipe.save()
             return redirect('recipe', recipe_name=name)
     else:
         form = RecipeForm()
@@ -34,6 +36,8 @@ def add_recipe(request):
 def get_recipes_on_name(request, recipe_name):
     recipe = Recipe.objects.filter(name=recipe_name).first()
     if recipe is not None:
+        recipe.views += 1
+        recipe.save()
         context = {'recipe': recipe, 'name': f'Рецепт {recipe_name}'}
         return render(request, 'recipeapp/recipe.html', context)
     return render(request, 'recipeapp/404.html',

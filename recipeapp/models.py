@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -26,7 +27,7 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField(Ingredient)
     categories = models.ManyToManyField(Category)
     photo = models.ImageField(upload_to='recipe/', null=True, blank=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_recipes')
+    author = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, related_name='recipes', null=True, default=None)
     views = models.PositiveIntegerField(default=0)
     date_added = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)

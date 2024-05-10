@@ -1,43 +1,56 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <script type="text/javascript" href="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <script type="text/javascript" href="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+    <script type="text/javascript"
+            href="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
     <script type="text/javascript" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <title>{% block title %} Finalwork {% endblock %}</title>
 </head>
-<body>
+
 <!-- navbar goes here -->
 <nav class="bg-gray-100 fixed inset-x-0">
-    <div class="max-w-6xl mx-auto px-4">
-        <div class="flex justify-between">
-            <div class="flex space-x-4">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="flex space-between">
+            <div class="flex space-x-5">
                 <!-- logo -->
-                <div> <a href="{% url 'index' %}" class="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900"> <i class='bx bxs-home mr-1 text-xl mb-1 text-green-700'></i>
-                    <span class="font-bold">Healthy Yummy</span> </a> </div>
+                <div><a href="{% url 'index' %}" class="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
+                    <i class='bx bxs-home mr-1 text-xl mb-1 text-green-700'></i>
+                    <span class="font-bold">Healthy Yummy</span> </a></div>
                 <!-- primary nav -->
                 <div class="hidden md:flex items-center space-x-1">
                     <a href="{% url 'index' %}" class="py-5 px-3 text-gray-700 hover:text-gray-900">Главная</a>
                     <a href="{% url 'recipes' %}" class="py-5 px-3 text-gray-700 hover:text-gray-900">Рецепты</a>
-                    <a href="{% url 'add_recipe' %}" class="py-5 px-3 text-gray-700 hover:text-gray-900">Добавить рецепт</a>
-                    <a href="{% url 'categories' %}" class="py-5 px-3 text-gray-700 hover:text-gray-900">Категории рецептов</a>
-                    <a href="{% url 'ingredients' %}" class="py-5 px-3 text-gray-700 hover:text-gray-900">Ингредиенты</a>
+                    <a href="{% url 'add_recipe' %}" class="py-5 px-3 text-gray-700 hover:text-gray-900">Добавить
+                        рецепт</a>
+                    <a href="{% url 'categories' %}" class="py-5 px-3 text-gray-700 hover:text-gray-900">Категории
+                        рецептов</a>
+                    <a href="{% url 'ingredients' %}"
+                       class="py-5 px-3 text-gray-700 hover:text-gray-900">Ингредиенты</a>
                 </div> <!-- secondary nav -->
-            <div class="hidden md:flex items-center space-x-1">
-                {% if user.is_authenticated %}
-                    <a href="" class="py-5 px-3">{{user.username}}</a>
-                    <a href="{% url 'userapp:logout' %}" class="last py-2 px-3 bg-yellow-400 text-white hover:bg-yellow-300 text-sm hover:text-yellow-800 rounded transition duration-300">Выйти</a> </div>
+                <div class="hidden md:flex items-center space-x-1">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'userapp:profile' %}" class="font-bold py-5 px-3">{{user.username}}</a>
+                    <a href="{% url 'userapp:logout' %}"
+                       class="last py-2 px-3 bg-yellow-400 text-white hover:bg-yellow-300 text-sm hover:text-yellow-800 rounded transition duration-300">Выйти</a>
+                </div>
                 {% else %}
                 <a href="{% url 'userapp:login' %}" class="py-5 px-3">Войти</a>
-                <a href="" class="last py-2 px-3 bg-yellow-400 text-white hover:bg-yellow-300 text-sm hover:text-yellow-800 rounded transition duration-300">Зарегистироваться</a>
+                <a href="{% url 'userapp:register' %}"
+                   class="last py-2 px-3 bg-yellow-400 text-white hover:bg-yellow-300 text-sm hover:text-yellow-800 rounded transition duration-300">Зарегистироваться</a>
                 {% endif %}
             </div>
             <!-- mobile button goes here -->
-            <div class="md:hidden flex items-center"> <button class="mobile-menu-button focus:outline-none">
-                     <i class='bx bx-menu text-3xl mt-1'></i> </button> </div>
+            <div class="md:hidden flex items-center">
+                <button class="mobile-menu-button focus:outline-none">
+                    <i class='bx bx-menu text-3xl mt-1'></i></button>
+            </div>
         </div>
     </div> <!-- mobile menu -->
     <div class="mobile-menu hidden md:hidden">
@@ -48,21 +61,26 @@
         <a href="{% url 'ingredients' %}" class="block py-2 px-4 text-sm hover:bg-gray-200">Ингредиенты</a>
 </nav>
 <!-- content goes here -->
+<body>
+<div class="py-32 h-screen p-100" style="background-image:linear-gradient(to right top,#858842,#a3b952)">
+<div class="mx-auto p-2">
+        <div class="container">
 
-<div class="py-32 h-screen p-3" style="background-image:linear-gradient(to right top,#858842,#a3b952)">
-
-  {% block content %}
+    {% block content %}
     <p>Скоро тут появится текст...</p>
-  {% endblock %}
+    {% endblock %}
+
+            </div>
+    </div>
 
 
-<footer class="mt-auto">   <hr>
-    <p class="text-center text-muted">© 2024 Healthy Yummy</p></footer>
+
 </div>
+<footer class="mt-auto">
+        <hr>
+        <p class="text-center text-muted">© 2024 Healthy Yummy</p></footer>
 
 </body>
-
-
 
 
 </html>

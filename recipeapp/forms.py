@@ -6,7 +6,7 @@ class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = ('name', 'description', 'steps', 'cooking_time', 'ingredients',
-                  'categories', 'photo', 'author',)
+                  'categories', 'photo')
         labels = {
             'name': 'Название',
             'description': 'Рецептура',
@@ -14,12 +14,11 @@ class RecipeForm(forms.ModelForm):
             'cooking_time': 'Время приготовления, в мин.',
             'ingredients': 'Ингредиенты',
             'categories': 'Категории рецепта',
-            'photo': 'Фото готового блюда',
-            'author': 'Автор'}
+            'photo': 'Фото готового блюда'
+        }
         help_texts = {'ingredients': 'Выберите все необходимые ингредиенты с помощью удержания кнопки CTRL',
                       'categories': 'Выберите все необходимые категории с помощью удержания кнопки CTRL'}
-        field_classes = {'author': forms.ModelChoiceField,
-                         'ingredients': forms.ModelMultipleChoiceField,
+        field_classes = {'ingredients': forms.ModelMultipleChoiceField,
                          'categories': forms.ModelMultipleChoiceField, }
 
 

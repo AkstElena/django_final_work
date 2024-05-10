@@ -5,7 +5,12 @@
 <h1>Авторизация</h1>
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+        <input type="hidden" name="next" value="{{ next }}" />
+    <table>
+    {{ form.as_table }}
+    </table>
     <p><button type="submit">Войти</button> </p>
+
+    <p ><a href="{% url 'userapp:password_reset' %}">Забыли пароль?</a></p>
 </form>
 {% endblock %}

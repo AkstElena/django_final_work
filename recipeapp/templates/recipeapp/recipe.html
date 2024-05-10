@@ -4,16 +4,29 @@
 
 {% block content %}
 
- <p class="text-center text-muted font-bold"> {{ recipe.name }}</p>
 
-    <div><b> Автор: </b>{{ recipe.author }}</div>
-    <div><b> Описание: </b>{{ recipe.description }}</div>
-    <div><b> Ингредиенты: </b>{{ recipe.display_ingredients }}</div>
-    <div><b> Категории: </b>{{ recipe.display_categories }}</div>
-    {% if recipe.photo %}
-    <div><b> Фото готового блюда: </b><p><img src="{{ recipe.photo.url }}" alt='изображение' width="300"></p></div>
-    {% endif %}
 
-<button><a href="{% url 'update_recipe' recipe.name %}">Отредактировать рецепт</a></button>
+<div class="card" style="width: 18rem;">
+  {% if recipe.photo %}
+    <img src="{{ recipe.photo.url }}" class="card-img-top" alt="изображение">
+  {% endif %}
+  <div class="card-body">
+    <h5 class="card-title"> {{ recipe.name }} | Автор: {{ recipe.author }}</h5>
+    <h5 class="card-text"> Категории:  {{ recipe.display_categories }}</h5>
+    <h5 class="card-text"> Ингредиенты:  {{ recipe.display_ingredients }}</h5>
+    <p class="card-text">{{ recipe.description }}</p>
+    <a href="{% url 'update_recipe' recipe.name %}" class="hover:bg-yellow-300 hover:text-black btn btn-primary">Отредактировать рецепт</a>
+  </div>
+</div>
+
+<!--    <div><b> Автор: </b></div>-->
+<!--    <div><b> Описание: </b>{{ recipe.description }}</div>-->
+<!--    <div><b> Ингредиенты: </b>{{ recipe.display_ingredients }}</div>-->
+<!--    <div><b> Категории: </b>{{ recipe.display_categories }}</div>-->
+<!--    {% if recipe.photo %}-->
+<!--    <div><b> Фото готового блюда: </b><p><img src="{{ recipe.photo.url }}" alt='изображение' width="300"></p></div>-->
+<!--    {% endif %}-->
+
+<!--<button><a href="{% url 'update_recipe' recipe.name %}">Отредактировать рецепт</a></button>-->
 
 {% endblock %}

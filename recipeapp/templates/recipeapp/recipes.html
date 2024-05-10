@@ -3,16 +3,27 @@
 {% block title %} {{ name }} {% endblock %}
 
 {% block content %}
-<h2>Рецепты</h2>
+<h1 class="text-success font-bold display-4 text-center">Рецепты</h1>
 
 
 
-<button ><a href="{% url 'add_recipe' %}">Добавить новый рецепт</a></button>
-  <ol>
+<button ><a class="hover:bg-yellow-300 hover:text-black btn btn-success" href="{% url 'add_recipe' %}">Добавить новый рецепт</a></button>
+<div class="row">
     {% for recipe in recipes %}
-    <li><div><a href="{% url 'recipe' recipe.name %}"> {{ recipe }}</a></div>
-        <div><b> Автор: </b>{{ recipe.author.username }}</div>
-    </li>
+    <div class="card" style="width: 18rem;">
+  {% if recipe.photo %}
+    <img src="{{ recipe.photo.url }}" class="card-img-top" alt="изображение">
+  {% endif %}
+    <div class="card-body">
+      <h4 class="card-title"> {{ recipe.name }} | Автор: {{ recipe.author }}</h4>
+      <h5 class="card-text"> Категории:  {{ recipe.display_categories }}</h5>
+      <h5 class="card-text"> Ингредиенты:  {{ recipe.display_ingredients }}</h5>
+      <a href="{% url 'recipe' recipe.name %}" class="hover:bg-yellow-300 hover:text-black btn btn-primary">Показать рецепт</a>
+    </div>
+</div>
+
+
     {% endfor %}
-  </ol>
+
+</div>
 {% endblock %}
