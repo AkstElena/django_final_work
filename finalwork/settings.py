@@ -19,13 +19,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-n4fd)fn0h1slf)75^m4z=d-=^nyl5$&a%pa!#e^jd*wagbf#b$'
+SECRET_KEY = os.getenv('SECRET_KEY')
+# SECRET_KEY = 'django-insecure-n4fd)fn0h1slf)75^m4z=d-=^nyl5$&a%pa!#e^jd*wagbf#b$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
+    'HealthyYummy.pythonanywhere.com',
 ]
 
 # Application definition
@@ -79,8 +83,17 @@ WSGI_APPLICATION = 'finalwork.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'HealthyYummy$default',
+        'USER': 'HealthyYummy',
+        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
+        'HOST': 'HealthyYummy.mysql.pythonanywhere-services.com',
+        'OPTIONS': {
+            'init_command': "SET NAMES 'utf8mb4';SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
+        },
     }
 }
 
@@ -131,7 +144,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
 LOGIN_URL = 'userapp:login'
-
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
