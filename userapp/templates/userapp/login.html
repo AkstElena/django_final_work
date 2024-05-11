@@ -2,15 +2,29 @@
 
 {% block content %}
 
-<h1>Авторизация</h1>
-<form method="post">
-    {% csrf_token %}
-        <input type="hidden" name="next" value="{{ next }}" />
-    <table>
-    {{ form.as_table }}
-    </table>
-    <p><button type="submit">Войти</button> </p>
+<!--<h1>Авторизация</h1>-->
+<!--<form method="post">-->
+<!--    {% csrf_token %}-->
+<!--        <input type="hidden" name="next" value="{{ next }}" />-->
+<!--    <table>-->
+<!--    {{ form.as_table }}-->
+<!--    </table>-->
+<!--    <p><button type="submit">Войти</button> </p>-->
 
-    <p ><a href="{% url 'userapp:password_reset' %}">Забыли пароль?</a></p>
+<!--    <p ><a href="{% url 'userapp:password_reset' %}">Забыли пароль?</a></p>-->
+<!--</form>-->
+
+
+<h3 class="text-success font-bold display-6 text-center">Авторизация</h3>
+
+<form method="post" >
+    {% csrf_token %}
+    <table class="mt-xl-4">
+        {{ form.as_table }}
+    </table>
+    <button type="submit" class="mt-3 hover:bg-yellow-300 hover:text-black btn btn-success">Войти</button>
 </form>
+<hr>
+<button class="mt-xl-4 mb-3"><a class="hover:bg-yellow-300 hover:text-black btn btn-success"
+                                href="{% url 'userapp:password_reset' %}">Забыли пароль?</a></button>
 {% endblock %}

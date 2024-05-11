@@ -11,12 +11,12 @@
             href="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
     <script type="text/javascript" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <title>{% block title %} Finalwork {% endblock %}</title>
+    <title>{% block title %}  Healthy Yummy {% endblock %}</title>
 </head>
 
 <!-- navbar goes here -->
 <nav class="bg-gray-100 fixed inset-x-0">
-    <div class="max-w-6xl mx-auto px-5">
+    <div class="max-w-7xl mx-auto">
         <div class="flex space-between">
             <div class="flex space-x-5">
                 <!-- logo -->
@@ -59,26 +59,23 @@
         <a href="{% url 'add_recipe' %}" class="block py-2 px-4 text-sm hover:bg-gray-200">Добавить рецепт</a>
         <a href="{% url 'categories' %}" class="block py-2 px-4 text-sm hover:bg-gray-200">Категории рецептов</a>
         <a href="{% url 'ingredients' %}" class="block py-2 px-4 text-sm hover:bg-gray-200">Ингредиенты</a>
+    </div>
 </nav>
 <!-- content goes here -->
 <body>
-<div class="py-32 h-screen p-100" style="background-image:linear-gradient(to right top,#858842,#a3b952)">
-<div class="mx-auto p-2">
+<div class="py-32 h-screen" style="background-image:linear-gradient(to right top,#858842,#a3b952)">
+    <div class="mx-auto p-2">
         <div class="container">
-
-    {% block content %}
-    <p>Скоро тут появится текст...</p>
-    {% endblock %}
-
-            </div>
+            {% block content %}
+            <p>Скоро тут появится текст...</p>
+            {% endblock %}
+        </div>
     </div>
-
-
-
 </div>
 <footer class="mt-auto">
-        <hr>
-        <p class="text-center text-muted">© 2024 Healthy Yummy</p></footer>
+    <hr>
+    <p class="text-center text-muted">© 2024 Healthy Yummy | Акст Елена</p>
+</footer>
 
 </body>
 

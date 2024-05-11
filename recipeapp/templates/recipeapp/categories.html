@@ -3,16 +3,28 @@
 {% block title %} {{ name }} {% endblock %}
 
 {% block content %}
+<h3 class="text-success font-bold display-6 text-center mb-xl-4">{{ name }}</h3>
+<button class="mb-3"><a class="hover:bg-yellow-300 hover:text-black btn btn-success" href="{% url 'add_categories' %}">Добавить
+    новую категорию</a></button>
 
-  <h2>Текущие категории</h2>
-<p>При переходе по ссылке по наименованию категории отобразятся все рецепты в ней</p>
-<button><a href="{% url 'add_categories' %}">Добавить новую категорию</a></button>
-  <table>
-    <tr><td> <b>№ п/п </b></td><td> <b> Наименование категории</b></td></tr>
-  {% for key, value in categories.items %}
-    <tr><td>{{ key }}</td><td><a href="{% url 'category_recipes' value.name %}">{{ value.name }}</a></td></tr>
-  {% endfor %}
-  </table>
+<p class="text-center mb-xxl-4 lead">
+    При выборе категории отразятся рецепты данной категории
+</p>
+<div class="row row-cols-1 row-cols-md-5 g-4">
+
+    {% for key, value in categories.items %}
+    <div class="col">
+        <div class="card h-10">
+            <div class="card-body">
+                <h4 class="card-title">{{ key }} |    <a href="{% url 'category_recipes' value.name %}">{{ value.name }}</a> </h4>
+            </div>
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+
+
 {% endblock %}
 
 

@@ -1,9 +1,45 @@
 {% extends 'base.html' %}
 
 
-
 {% block content %}
 
-    <h1>STORE</h1>
+<h1 class="text-success font-bold display-5 text-center mb-xxl-4"> Healthy Yummy</h1>
+
+<p class="text-center mb-xxl-4 lead">
+    Добро пожаловать на сайт полезных и вкусных рецептов.
+</p>
+
+<figure class="text-center">
+    <blockquote class="blockquote">
+        <p>Ты то, что ты ешь</p>
+    </blockquote>
+    <figcaption class="blockquote-footer">
+        Гиппократ <cite title="Source Title">древнегреческий целитель</cite>
+    </figcaption>
+</figure>
+
+<p class="text-center mb-xl-3">
+    Пять наиболее часто просматриваемых рецептов:
+</p>
+
+<div class="card-group gap-3">
+    {% for recipe in recipes %}
+    <div class="card" style="width: 18rem;">
+      {% if recipe.photo %}
+        <img src="{{ recipe.photo.url }}" class="card-img-top" alt="изображение">
+      {% endif %}
+        <div class="card-body">
+          <h4 class="card-title"> {{ recipe.name }} | Автор: {{ recipe.author }}</h4>
+          <h5 class="card-text"> Категории:  {{ recipe.display_categories }}</h5>
+          <h5 class="card-text"> Ингредиенты:  {{ recipe.display_ingredients }}</h5>
+          <h5 class="card-text"> Количество просмотров:  {{ recipe.views }}</h5>
+          <h5 class="card-text"> Дата добавления:  {{ recipe.date_added }}</h5>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'recipe' recipe.name %}" class="hover:bg-yellow-300 hover:text-black btn btn-primary">Показать рецепт</a>
+        </div>
+        </div>
+       {% endfor %}
+    </div>
 
 {% endblock %}

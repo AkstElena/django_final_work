@@ -1,0 +1,13 @@
+<div class="pagination">
+    <span class="mt-xl-4 step-links">
+        {% if page.has_previous %}
+            <a href="?page={{ recipes.previous_page_number }}" class="last py-2 px-3 bg-yellow-400 text-black hover:bg-yellow-300 text-sm hover:text-yellow-800 rounded transition duration-300">Назад</a>
+        {% endif %}
+        <span class="current">
+            Страница {{ recipes.number }} из {{ recipes.paginator.num_pages }}
+        </span>
+        {% if page.has_next %}
+            <a href="?page={{ recipes.next_page_number }}" class="last py-2 px-3 bg-yellow-400 text-black hover:bg-yellow-300 text-sm hover:text-yellow-800 rounded transition duration-300">Вперед</a>
+        {% endif %}
+    </span>
+</div>

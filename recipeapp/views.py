@@ -1,18 +1,22 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.utils import timezone
 from .models import Category, Ingredient, Recipe
 from .forms import CategoryForm, IngredientForm, RecipeForm
+from django.core.paginator import Paginator
 
 
-# Create your views here.
 def index(request):
-    return render(request, 'recipeapp/index.html')
+    recipes = Recipe.objects.all().order_by('-views')[:5]
+    context = {'recipes': recipes, 'name': 'Рецепты'}
+    return render(request, 'recipeapp/index.html', context)
 
 
 def recipes(request):
-    recipes = Recipe.objects.all()
-    context = {'recipes': recipes, 'name': 'Рецепты'}
+    recipes = Recipe.objects.all().order_by('-views')
+    paginator = Paginator(recipes, per_page=4)
+    page_number = request.GET.get('page')
+    page_object = paginator.get_page(page_number)
+    context = {'recipes': page_object, 'name': 'Рецепты'}
     return render(request, 'recipeapp/recipes.html', context)
 
 
@@ -33,6 +37,7 @@ def add_recipe(request):
     return render(request, 'recipeapp/form_add.html', {'form': form, 'message': message})
 
 
+@login_required
 def get_recipes_on_name(request, recipe_name):
     recipe = Recipe.objects.filter(name=recipe_name).first()
     if recipe is not None:
@@ -45,22 +50,22 @@ def get_recipes_on_name(request, recipe_name):
                    'name': 'Данные не обнаружены'})
 
 
+@login_required
 def update_recipe(request, recipe_name):
     recipe = Recipe.objects.filter(name=recipe_name).first()
     if recipe is not None:
         if request.method == 'POST':
-            form = RecipeForm(request.POST, request.FILES)
+            form = RecipeForm(request.POST, request.FILES, instance=recipe)
             message = 'Ошибка в данных'
             if form.is_valid():
                 name = form.cleaned_data['name']
                 form.save()
                 return redirect('recipe', recipe_name=name)
         else:
-            form = RecipeForm()
-            message = 'Введите новые данные по товару'
+            form = RecipeForm(instance=recipe)
+            message = 'Редактирование рецепта'
         return render(request, 'recipeapp/form_edit.html', {'form': form,
                                                             'message': message,
-                                                            'name': 'Текущие данные рецепта',
                                                             'recipe': recipe})
     return render(request, 'recipeapp/404.html',
                   {'text': f'Рецепта с названием {recipe_name} не найдено',
@@ -89,7 +94,11 @@ def get_recipes_on_categories(request, category):
         if category in recipe.display_categories():
             all_recipes.append(recipe)
     if all_recipes:
-        context = {'recipes': all_recipes, 'name': f'Рецепты по категории {category}'}
+        paginator = Paginator(all_recipes, per_page=4)
+        page_number = request.GET.get('page')
+        page_object = paginator.get_page(page_number)
+        context = {'recipes': page_object, 'name': f'Рецепты по категории: {category}'}
+        # context = {'recipes': all_recipes, 'name': f'Рецепты по категории: {category}'}
         return render(request, 'recipeapp/recipes.html', context)
     return render(request, 'recipeapp/404.html',
                   {'text': f'Рецептов в категории {category} не обнаружено',
@@ -104,10 +113,14 @@ def get_recipes_on_ingredients(request, ingredient):
         if ingredient in recipe.display_ingredients():
             all_recipes.append(recipe)
     if all_recipes:
-        context = {'recipes': all_recipes, 'name': f'Рецепты по категории {ingredient}'}
+        paginator = Paginator(all_recipes, per_page=4)
+        page_number = request.GET.get('page')
+        page_object = paginator.get_page(page_number)
+        context = {'recipes': page_object, 'name': f'Рецепты содержащие ингредиент:  {ingredient}'}
+        # context = {'recipes': all_recipes, 'name': f'Рецепты содержащие ингредиент:  {ingredient}'}
         return render(request, 'recipeapp/recipes.html', context)
     return render(request, 'recipeapp/404.html',
-                  {'text': f'Рецептов в категории {ingredient} не обнаружено',
+                  {'text': f'Рецептов c ингредиентом {ingredient} не обнаружено',
                    'name': 'Данные не обнаружены'})
 
 
@@ -135,7 +148,7 @@ def add_categories(request):
 def get_ingredients(request):
     ingredients = Ingredient.objects.all()
     categories_dict = {index: value for index, value in enumerate(ingredients, 1)}
-    context = {'categories': categories_dict, 'name': 'Текущие ингредиенты'}
+    context = {'categories': categories_dict, 'name': 'Ингредиенты'}
     return render(request, 'recipeapp/ingredients.html', context)
 
 

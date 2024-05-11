@@ -3,27 +3,34 @@
 {% block title %} {{ name }} {% endblock %}
 
 {% block content %}
-<h1 class="text-success font-bold display-4 text-center">Рецепты</h1>
+<h1 class="text-success font-bold display-5 text-center mb-xl-4">Рецепты</h1>
 
 
 
-<button ><a class="hover:bg-yellow-300 hover:text-black btn btn-success" href="{% url 'add_recipe' %}">Добавить новый рецепт</a></button>
-<div class="row">
+<button ><a class="hover:bg-yellow-300 hover:text-black btn btn-success mb-xl-4" href="{% url 'add_recipe' %}">Добавить новый рецепт</a></button>
+<div class="row row-cols-1 row-cols-md-4 g-4">
+
     {% for recipe in recipes %}
-    <div class="card" style="width: 18rem;">
-  {% if recipe.photo %}
-    <img src="{{ recipe.photo.url }}" class="card-img-top" alt="изображение">
-  {% endif %}
-    <div class="card-body">
-      <h4 class="card-title"> {{ recipe.name }} | Автор: {{ recipe.author }}</h4>
-      <h5 class="card-text"> Категории:  {{ recipe.display_categories }}</h5>
-      <h5 class="card-text"> Ингредиенты:  {{ recipe.display_ingredients }}</h5>
-      <a href="{% url 'recipe' recipe.name %}" class="hover:bg-yellow-300 hover:text-black btn btn-primary">Показать рецепт</a>
-    </div>
+        <div class="col ">
+    <div class="card h-100" >
+      {% if recipe.photo %}
+        <img src="{{ recipe.photo.url }}" class="card-img-top" alt="изображение">
+      {% endif %}
+        <div class="card-body">
+          <h4 class="card-title"> {{ recipe.name }} | Автор: {{ recipe.author }}</h4>
+          <h5 class="card-text"> Категории:  {{ recipe.display_categories }}</h5>
+          <h5 class="card-text"> Ингредиенты:  {{ recipe.display_ingredients }}</h5>
+          <h5 class="card-text"> Количество просмотров:  {{ recipe.views }}</h5>
+          <h5 class="card-text"> Дата добавления:  {{ recipe.date_added }}</h5>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'recipe' recipe.name %}" class="hover:bg-yellow-300 hover:text-black btn btn-primary">Показать рецепт</a>
+        </div>
+        </div>
+            </div>
+       {% endfor %}
+
 </div>
 
-
-    {% endfor %}
-
-</div>
+{% include "recipeapp/pagination.html" with page=recipes %}
 {% endblock %}

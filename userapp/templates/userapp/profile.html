@@ -1,19 +1,20 @@
 {% extends 'base.html' %}
- 
+
 {% block content %}
-<h1>Профиль</h1>
- 
-<form method="post">
+
+
+<h3 class="text-success font-bold display-6 text-center">Профиль</h3>
+
+<form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <div class="form-error">{{ form.non_field_errors }}</div>
-    {% for f in form %}
-    <p ><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
-    <div class="form-error">{{ f.errors }}</div>
-    {% endfor %}
- 
-    <p ><button type="submit">Сохранить</button></p>
+    <table class="mt-xl-4">
+        {{ form.as_table }}
+    </table>
+    <button type="submit" class="mt-3 hover:bg-yellow-300 hover:text-black btn btn-success">Сохранить</button>
 </form>
 <hr>
-<p ><a href="{% url 'userapp:password_change' %}">Сменить пароль</a></p>
- 
+<button class="mt-xl-4 mb-3"><a class="hover:bg-yellow-300 hover:text-black btn btn-success"
+                                href="{% url 'userapp:password_change' %}">Сменить пароль</a></button>
+
+
 {% endblock %}

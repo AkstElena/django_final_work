@@ -3,10 +3,12 @@
 {% block title %} {{ name }} {% endblock %}
 
 {% block content %}
-  <table>
+<table>
     <tr>
-        <td> <b><a href="{% url 'index' %}">Главная</a> </b></td>
+        <button class="mb-3"><a class="hover:bg-yellow-300 hover:text-black btn btn-success" href="{% url 'index' %}">
+                                Главная</a></button>
 
-  </table>
-    <h3>{{ text }}</h3>
+
+</table>
+<h3>{{ text }}</h3>
 {% endblock %}

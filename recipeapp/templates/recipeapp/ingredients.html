@@ -4,19 +4,25 @@
 
 {% block content %}
 
-<h2>Текущие ингредиенты</h2>
-<p>При переходе по ссылке по наименованию категории отобразятся все рецепты с данными ингредиентами</p>
-<button><a href="{% url 'add_ingredients' %}">Добавить новый ингредиент</a></button>
-<table>
-    <tr>
-        <td><b>№ п/п </b></td>
-        <td><b> Наименование ингредиента</b></td>
-    </tr>
+
+<h3 class="text-success font-bold display-6 text-center mb-xl-4">{{ name }}</h3>
+<button class="mb-3"><a class="hover:bg-yellow-300 hover:text-black btn btn-success" href="{% url 'add_ingredients' %}">Добавить новый ингредиент</a></button>
+
+<p class="text-center mb-xxl-4 lead">
+    При выборе ингредиента отразятся рецепты с ним
+</p>
+<div class="row row-cols-1 row-cols-md-5 g-4">
+
     {% for key, value in categories.items %}
-    <tr>
-        <td>{{ key }}</td>
-        <td><a href="{% url 'ingredient_recipes' value.name %}">{{ value.name }}</a></td>
-    </tr>
+    <div class="col">
+        <div class="card h-10">
+            <div class="card-body">
+                <h4 class="card-title">{{ key }} |    <a href="{% url 'ingredient_recipes' value.name %}">{{ value.name }}</a> </h4>
+            </div>
+        </div>
+
+    </div>
     {% endfor %}
-</table>
+</div>
+
 {% endblock %}
