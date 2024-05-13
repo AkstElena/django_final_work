@@ -4,9 +4,8 @@
 <h3 class="text-success font-bold display-6 text-center">{{ message }}</h3>
 <button class="mb-3"><a class="hover:bg-yellow-300 hover:text-black btn btn-success" href="{% url 'add_categories' %}">Добавить новую категорию</a></button>
 <button class="mb-3"><a class="hover:bg-yellow-300 hover:text-black btn btn-success" href="{% url 'add_ingredients' %}">Добавить новый ингредиент</a></button>
-<form action="" method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-     <input type="hidden" name="next" value="{{ next }}" />
     <table>
     {{ form.as_table }}
     </table>

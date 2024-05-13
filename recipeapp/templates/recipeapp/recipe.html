@@ -5,29 +5,29 @@
 {% block content %}
 
 <div class="card-group gap-3 mt-xl-5">
-<div class="card" style="width: 25rem;">
-  {% if recipe.photo %}
-    <img src="{{ recipe.photo.url }}" class="card-img-top" alt="изображение">
-  {% endif %}
-</div>
-<div class="card" style="width: 25rem;">
-    <div class="card-body">
-    <h5 class="card-title"> <b>{{ recipe.name }}</b> | <i>Автор</i>: {{ recipe.author }}</h5>
-    <h5 class="card-title"> <i>Категории:</i>  {{ recipe.display_categories }}</h5>
-    <h5 class="card-title"> <i>Ингредиенты:</i>  {{ recipe.display_ingredients }}</h5>
-    <h5 class="card-title"> <i>Количество шагов:</i>  {{ recipe.step }}</h5>
-    <h5 class="card-title"> <i>Время приготовления, мин:</i>  {{ recipe.cooking_time }}</h5>
-    <h5 class="card-title"> <i>Время приготовления, мин:</i>  {{ recipe.cooking_time }}</h5>
+    <div class="card" style="width: 25rem;">
+        {% if recipe.photo %}
+        <img src="{{ recipe.photo.url }}" class="card-img-top" alt="изображение" style="object-fit: contain; height: 30rem">
+        {% endif %}
+    </div>
+    <div class="card" style="width: 25rem;">
+        <div class="card-body">
+            <h5 class="card-title"><b>{{ recipe.name }}</b> | <i>Автор</i>: {{ recipe.author }}</h5>
+            <h5 class="card-title"><i>Категории:</i> {{ recipe.display_categories }}</h5>
+            <h5 class="card-title"><i>Ингредиенты:</i> {{ recipe.display_ingredients }}</h5>
+            <h5 class="card-title"><i>Количество шагов:</i> {{ recipe.steps }}</h5>
+            <h5 class="card-title"><i>Время приготовления, мин:</i> {{ recipe.cooking_time }}</h5>
 
-      <h5 class="card-title"> <i>Количество просмотров:</i>  {{ recipe.views }}</h5>
-      <h5 class="card-title"> <i>Дата добавления:</i>  {{ recipe.date_added }}</h5>
-      <h5 class="card-title"> <i>Дата редактирования:</i>  {{ recipe.date_updated }}</h5>
-          <p class="card-text"> <b>Процесс приготовления:</b> {{ recipe.description }}</p>
-  </div>
-   <div class="card-footer">
-            <a href="{% url 'update_recipe' recipe.name %}" class="hover:bg-yellow-300 hover:text-black btn btn-primary">Отредактировать рецепт</a>
+            <h5 class="card-title"><i>Количество просмотров:</i> {{ recipe.views }}</h5>
+            <h5 class="card-title"><i>Дата добавления:</i> {{ recipe.date_added }}</h5>
+            <h5 class="card-title"><i>Дата редактирования:</i> {{ recipe.date_updated }}</h5>
+            <p class="card-text"><b>Процесс приготовления:</b> {{ recipe.description }}</p>
         </div>
+        <div class="card-footer">
+            <a href="{% url 'update_recipe' recipe.name %}"
+               class="hover:bg-yellow-300 hover:text-black btn btn-primary">Отредактировать рецепт</a>
         </div>
+    </div>
 </div>
 </div>
 
@@ -40,7 +40,6 @@
 <!--    {% endif %}-->
 
 <!--<button><a href="{% url 'update_recipe' recipe.name %}">Отредактировать рецепт</a></button>-->
-
 
 
 {% endblock %}

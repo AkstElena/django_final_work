@@ -18,6 +18,7 @@
 
 <form method="post" >
     {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}" />
     <table class="mt-xl-4">
         {{ form.as_table }}
     </table>

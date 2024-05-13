@@ -27,7 +27,7 @@ def add_recipe(request):
         message = 'Ошибка в данных'
         if form.is_valid():
             name = form.cleaned_data['name']
-            recipe = form.save(commit=False)
+            recipe = form.save()
             recipe.author = request.user
             recipe.save()
             return redirect('recipe', recipe_name=name)
@@ -54,19 +54,24 @@ def get_recipes_on_name(request, recipe_name):
 def update_recipe(request, recipe_name):
     recipe = Recipe.objects.filter(name=recipe_name).first()
     if recipe is not None:
-        if request.method == 'POST':
-            form = RecipeForm(request.POST, request.FILES, instance=recipe)
-            message = 'Ошибка в данных'
-            if form.is_valid():
-                name = form.cleaned_data['name']
-                form.save()
-                return redirect('recipe', recipe_name=name)
+        if recipe.author == request.user:
+            if request.method == 'POST':
+                form = RecipeForm(request.POST, request.FILES, instance=recipe)
+                message = 'Ошибка в данных'
+                if form.is_valid():
+                    name = form.cleaned_data['name']
+                    form.save()
+                    return redirect('recipe', recipe_name=name)
+            else:
+                form = RecipeForm(instance=recipe)
+                message = 'Редактирование рецепта'
+            return render(request, 'recipeapp/form_edit.html', {'form': form,
+                                                                'message': message,
+                                                                'recipe': recipe})
         else:
-            form = RecipeForm(instance=recipe)
-            message = 'Редактирование рецепта'
-        return render(request, 'recipeapp/form_edit.html', {'form': form,
-                                                            'message': message,
-                                                            'recipe': recipe})
+            return render(request, 'recipeapp/404.html',
+                          {'text': f'Автором рецепта: {recipe_name} является другой пользователь',
+                           'name': 'Данные не обнаружены'})
     return render(request, 'recipeapp/404.html',
                   {'text': f'Рецепта с названием {recipe_name} не найдено',
                    'name': 'Данные не обнаружены'})
@@ -126,8 +131,10 @@ def get_recipes_on_ingredients(request, ingredient):
 
 def get_categories(request):
     categories = Category.objects.all()
-    categories_dict = {index: value for index, value in enumerate(categories, 1)}
-    context = {'categories': categories_dict, 'name': 'Категории рецептов'}
+    paginator = Paginator(categories, per_page=40)
+    page_number = request.GET.get('page')
+    page_object = paginator.get_page(page_number)
+    context = {'categories': page_object, 'name': 'Категории рецептов'}
     return render(request, 'recipeapp/categories.html', context)
 
 
@@ -147,8 +154,10 @@ def add_categories(request):
 
 def get_ingredients(request):
     ingredients = Ingredient.objects.all()
-    categories_dict = {index: value for index, value in enumerate(ingredients, 1)}
-    context = {'categories': categories_dict, 'name': 'Ингредиенты'}
+    paginator = Paginator(ingredients, per_page=40)
+    page_number = request.GET.get('page')
+    page_object = paginator.get_page(page_number)
+    context = {'categories': page_object, 'name': 'Ингредиенты'}
     return render(request, 'recipeapp/ingredients.html', context)
 
 

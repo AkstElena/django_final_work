@@ -24,9 +24,9 @@
 
 <div class="card-group gap-3">
     {% for recipe in recipes %}
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 15rem;">
       {% if recipe.photo %}
-        <img src="{{ recipe.photo.url }}" class="card-img-top" alt="изображение">
+        <img src="{{ recipe.photo.url }}" class="card-img" alt="изображение" style="object-fit: contain; height: 10rem">
       {% endif %}
         <div class="card-body">
           <h4 class="card-title"> {{ recipe.name }} | Автор: {{ recipe.author }}</h4>

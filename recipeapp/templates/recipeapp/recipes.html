@@ -11,10 +11,10 @@
 <div class="row row-cols-1 row-cols-md-4 g-4">
 
     {% for recipe in recipes %}
-        <div class="col ">
-    <div class="card h-100" >
+    <div class="col ">
+    <div class="card h-100 "  >
       {% if recipe.photo %}
-        <img src="{{ recipe.photo.url }}" class="card-img-top" alt="изображение">
+        <img src="{{ recipe.photo.url }}" class="card-img-top" alt="изображение" style="object-fit: contain; height: 15rem">
       {% endif %}
         <div class="card-body">
           <h4 class="card-title"> {{ recipe.name }} | Автор: {{ recipe.author }}</h4>
@@ -26,7 +26,7 @@
         <div class="card-footer">
             <a href="{% url 'recipe' recipe.name %}" class="hover:bg-yellow-300 hover:text-black btn btn-primary">Показать рецепт</a>
         </div>
-        </div>
+    </div>
             </div>
        {% endfor %}
 
